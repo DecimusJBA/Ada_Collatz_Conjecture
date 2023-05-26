@@ -51,7 +51,6 @@ begin
 
    while num > endValue loop
 
-     -- Put_Line("The loop value is: " & to_String(str1));
       num := Long_Long_Integer'Value(To_String(str1));
       Put_Line("The num value is: " & Long_Long_Integer'Image(num));
 
