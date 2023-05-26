@@ -30,6 +30,7 @@ package body ada_main is
    E121 : Short_Integer; pragma Import (Ada, E121, "system__finalization_root_E");
    E119 : Short_Integer; pragma Import (Ada, E119, "ada__finalization_E");
    E118 : Short_Integer; pragma Import (Ada, E118, "system__file_io_E");
+   E148 : Short_Integer; pragma Import (Ada, E148, "ada__strings__unbounded_E");
    E094 : Short_Integer; pragma Import (Ada, E094, "ada__text_io_E");
 
    Sec_Default_Sized_Stacks : array (1 .. 1) of aliased System.Secondary_Stack.SS_Stack (System.Parameters.Runtime_Default_Sec_Stack_Size);
@@ -48,12 +49,19 @@ package body ada_main is
       begin
          F1;
       end;
+      E148 := E148 - 1;
       declare
          procedure F2;
-         pragma Import (Ada, F2, "system__file_io__finalize_body");
+         pragma Import (Ada, F2, "ada__strings__unbounded__finalize_spec");
+      begin
+         F2;
+      end;
+      declare
+         procedure F3;
+         pragma Import (Ada, F3, "system__file_io__finalize_body");
       begin
          E118 := E118 - 1;
-         F2;
+         F3;
       end;
       declare
          procedure Reraise_Library_Exception_If_Any;
@@ -205,6 +213,9 @@ package body ada_main is
       E119 := E119 + 1;
       System.File_Io'Elab_Body;
       E118 := E118 + 1;
+      Ada.Strings.Unbounded'Elab_Spec;
+      Ada.Strings.Unbounded'Elab_Body;
+      E148 := E148 + 1;
       Ada.Text_Io'Elab_Spec;
       Ada.Text_Io'Elab_Body;
       E094 := E094 + 1;
